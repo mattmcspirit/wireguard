@@ -1,0 +1,286 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "wgadmin",
+            "metadata": {
+                "description": "User name for the WireGuard Virtual Machine."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the Virtual Machine."
+            }
+        },
+        "vmName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 15,
+            "metadata": {
+                "description": "Virtual machine name.  This will also form part of the Public DNS name for the WireGuard VPN, in the format vmname<guid>.region.cloudapp.azure.com. This should have no spaces and consist of alphanumeric characters only, between 1-30 characters long."
+            },
+            "defaultValue": "wireguardvpn"
+        },
+        "vmSize": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_DS2_V2",
+                "Standard_F2s"
+            ],
+            "metadata": {
+                "description": "Virtual machine size. For details on sizing, refer to the <a href='https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general' target='_blank'>VM sizing documentation</a>"
+            },
+            "defaultValue": "Standard_F2s"
+        },
+        "scriptUrl": {
+            "type": "string",
+            "metadata": {
+                "artifactsBaseUrl": "",
+                "description": "Choose where the AzureWireGuard.sh install script can be found"
+            },
+            "defaultValue": "https://raw.githubusercontent.com/vijayshinva/AzureWireGuard/master/AzureWireGuard/CustomScripts/AzureWireGuard.sh"
+        }
+    },
+    "variables": {
+        "randomGUID": "[substring(uniqueString(resourceGroup().id),0,4)]",
+        "imagePublisher": "Canonical",
+        "imageOffer": "UbuntuServer",
+        "ubuntuOSVersion": "18.04-LTS",
+        "oSDiskName": "[toLower(concat(parameters('vmName'),'_osdisk_',variables('randomGUID')))]",
+        "nicName": "[toLower(concat(parameters('vmName'), '_nic_',variables('randomGUID')))]",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetPrefix": "10.0.0.0/24",
+        "subnetName": "[concat('subnet', variables('randomGUID'))]",
+        "storageName": "[concat('vhdstorage', variables('randomGUID'))]",
+        "storageType": "Standard_LRS",
+        "publicIPAddressName": "[toLower(concat(parameters('vmName'), '_pip_',variables('randomGUID')))]",
+        "publicIPAddressType": "Dynamic",
+        "vhdStorageContainerName": "vhds",
+        "nsgName": "[toLower(concat(parameters('vmName'), '_nsg_',variables('randomGUID')))]",
+        "dnsName": "[toLower(concat(parameters('vmName'),variables('randomGUID')))]",
+        "virtualNetworkName": "[toLower(concat(parameters('vmName'), '_vnet_',variables('randomGUID')))]",
+        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[toLower(variables('storageName'))]",
+            "apiVersion": "2018-07-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "StorageAccount"
+            },
+            "sku": {
+                "name": "[variables('storageType')]"
+            },
+            "properties": {},
+            "kind": "Storage"
+        },
+        {
+            "apiVersion": "2018-01-01",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('nsgName')]",
+            "tags": {
+                "displayName": "NetworkSecurityGroup"
+            },
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "wireguard_51820",
+                        "properties": {
+                            "description": "Allow Wireguard 51820",
+                            "protocol": "Udp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "51820",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1001,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "ssh_22",
+                        "properties": {
+                            "description": "Allow SSH 22",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1002,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2018-08-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddressName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "PublicIPAddress"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('dnsName')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2018-08-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworkName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "VirtualNetwork"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnetPrefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2018-08-01",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('nicName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "NetworkInterface"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+            ],
+            "properties": {
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                },
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+                            },
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": true
+            }
+        },
+        {
+            "apiVersion": "2018-10-01",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('vmName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "VirtualMachine"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('vmName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('imagePublisher')]",
+                        "offer": "[variables('imageOffer')]",
+                        "sku": "[variables('ubuntuOSVersion')]",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "osdisk",
+                        "vhd": {
+                            "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageName'))).primaryEndpoints.blob, variables('vhdStorageContainerName'),'/', variables('OSDiskName'),'.vhd')]"
+                        },
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": "true",
+                        "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageName'))).primaryEndpoints.blob)]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "AzureWireGuard",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2016-03-30",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+            ],
+            "tags": {
+                "displayName": "AzureWireGuard"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "skipDos2Unix": false,
+                    "fileUris": [
+                        "[parameters('scriptUrl')]"
+                    ],
+                    "commandToExecute": "[concat('bash AzureWireGuard.sh ', reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))).dnsSettings.fqdn, ' ', parameters('adminUsername'))]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        },
+        "WireGuardFQDN": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))).dnsSettings.fqdn]"
+        }
+    }
+}
