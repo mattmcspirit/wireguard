@@ -46,7 +46,7 @@
         }
     },
     "variables": {
-        "randomGUID": "[substring(uniqueString(resourceGroup().id),0,4)]",
+        "randomGUID": "[substring(uniqueString(subscription().subscriptionId, resourceGroup().id, parameters('vmName'),parameters('adminUsername')),0,6)]",
         "imagePublisher": "Canonical",
         "imageOffer": "UbuntuServer",
         "ubuntuOSVersion": "18.04-LTS",
