@@ -248,10 +248,10 @@
             }
         },
         {
-            "name": "AzureWireGuard",
+            "apiVersion": "2016-03-30",
+            "name": "[concat(parameters('vmName'),'/AzureWireGuardScript')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2016-03-30",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ],
