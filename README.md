@@ -52,3 +52,20 @@ The quickest way to setup your own modern VPN server.
 - Recommended to have a VM with atleast two cores.
 - Once the configuration files are downloaded, you can disable the SSH port 22 on the Azure Network Security Group for added security.
 - [Azure Accelerated Networking][azure-accelerated-nw] is enabled by default for better network performance, this limits the choice of Azure VM sizes.
+
+[azure-arm]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/
+[wireguard]: https://www.wireguard.com/
+[dns]: https://1.1.1.1/
+[ubuntu]: https://www.ubuntu.com/server
+[azure-portal]: https://portal.azure.com
+[vs]: https://visualstudio.microsoft.com/vs/community/
+[git-repo]: https://github.com/mattmcspirit/wireguard
+[azure-ps]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy
+[azure-cli]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy-cli
+[azure-rest]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy-rest
+[azure-deploy]: azuredeploy.net
+[azure-portal]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy-portal
+[azure-deploy-awg]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmattmcspirit%2Fwireguard%2Fmaster%2FDeployWireGuard.json
+[azure-rg]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups
+[ufw]: https://help.ubuntu.com/community/UFW
+[azure-accelerated-nw]: https://docs.microsoft.com/en-us/azure/virtual-network/create-vm-accelerated-networking-cli
