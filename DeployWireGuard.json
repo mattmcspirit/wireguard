@@ -55,6 +55,7 @@
         "subnetPrefix": "10.0.0.0/24",
         "subnetName": "[concat('subnet', variables('randomGUID'))]",
         "storageName": "[concat('vhdstorage', variables('randomGUID'))]",
+        "osDiskName": "[concat('osDisk_', variables('randomGUID'))]",
         "storageType": "Standard_LRS",
         "publicIPAddressName": "[toLower(concat(parameters('vmName'), '_pip_',variables('randomGUID')))]",
         "publicIPAddressType": "Dynamic",
@@ -223,7 +224,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "osdisk",
+                        "name": "[variables('osDiskName')]",
                         "caching": "ReadWrite",
                         "createOption": "FromImage",
                         "managedDisk": {
