@@ -16,7 +16,7 @@ sudo apt-get install linux-headers-$(uname -r) -y
 sudo apt-get install wireguard -y
 
 ## Install Resolvconf
-sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install resolvconf
+#sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install resolvconf
 
 ## Configure WireGuard
 
