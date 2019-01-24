@@ -21,7 +21,7 @@
             "minLength": 1,
             "maxLength": 15,
             "metadata": {
-                "description": "Virtual machine name.  This will also form part of the Public DNS name for the WireGuard VPN, in the format vmname<guid>.region.cloudapp.azure.com. This should have no spaces and consist of alphanumeric characters only, between 1-30 characters long."
+                "description": "Virtual machine name.  This will also form part of the Public DNS name for the WireGuard VPN, in the format vmname.region.cloudapp.azure.com. This should have no spaces and consist of alphanumeric characters only, between 1-30 characters long."
             },
             "defaultValue": "wireguardvpn"
         },
@@ -54,7 +54,7 @@
         "addressPrefix": "10.0.0.0/16",
         "subnetPrefix": "10.0.0.0/24",
         "subnetName": "[concat('subnet', variables('randomGUID'))]",
-        "storageName": "[toLower(concat(parameters('vmName'), '_stor_',variables('randomGUID')))]",
+        "storageName": "[toLower(concat(parameters('vmName'), 'stor',variables('randomGUID')))]",
         "osDiskName": "[toLower(concat(parameters('vmName'), '_osdisk_',variables('randomGUID')))]",
         "storageType": "Standard_LRS",
         "publicIPAddressName": "[toLower(concat(parameters('vmName'), '_pip_',variables('randomGUID')))]",
