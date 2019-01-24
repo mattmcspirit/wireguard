@@ -21,7 +21,7 @@
             "minLength": 1,
             "maxLength": 15,
             "metadata": {
-                "description": "Virtual machine name.  This will also form part of the Public DNS name for the WireGuard VPN, in the format vmname<guid>.region.cloudapp.azure.com. This should have no spaces and consist of alphanumeric characters only, between 1-30 characters long."
+                "description": "Virtual machine name.  This will also form part of the Public DNS name for the WireGuard VPN, in the format vmname.region.cloudapp.azure.com. This should have no spaces and consist of alphanumeric characters only, between 1-30 characters long."
             },
             "defaultValue": "wireguardvpn"
         },
@@ -46,20 +46,19 @@
         }
     },
     "variables": {
-        "randomGUID": "[substring(uniqueString(resourceGroup().id),0,4)]",
+        "randomGUID": "[substring(uniqueString(subscription().subscriptionId, resourceGroup().id, parameters('vmName'),parameters('adminUsername')),0,6)]",
         "imagePublisher": "Canonical",
         "imageOffer": "UbuntuServer",
         "ubuntuOSVersion": "18.04-LTS",
-        "oSDiskName": "[toLower(concat(parameters('vmName'),'_osdisk_',variables('randomGUID')))]",
         "nicName": "[toLower(concat(parameters('vmName'), '_nic_',variables('randomGUID')))]",
         "addressPrefix": "10.0.0.0/16",
         "subnetPrefix": "10.0.0.0/24",
         "subnetName": "[concat('subnet', variables('randomGUID'))]",
-        "storageName": "[concat('vhdstorage', variables('randomGUID'))]",
+        "storageName": "[toLower(concat(parameters('vmName'), 'stor',variables('randomGUID')))]",
+        "osDiskName": "[toLower(concat(parameters('vmName'), '_osdisk_',variables('randomGUID')))]",
         "storageType": "Standard_LRS",
         "publicIPAddressName": "[toLower(concat(parameters('vmName'), '_pip_',variables('randomGUID')))]",
         "publicIPAddressType": "Dynamic",
-        "vhdStorageContainerName": "vhds",
         "nsgName": "[toLower(concat(parameters('vmName'), '_nsg_',variables('randomGUID')))]",
         "dnsName": "[toLower(concat(parameters('vmName'),variables('randomGUID')))]",
         "virtualNetworkName": "[toLower(concat(parameters('vmName'), '_vnet_',variables('randomGUID')))]",
@@ -73,7 +72,7 @@
             "apiVersion": "2018-07-01",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "StorageAccount"
+                "Type": "StorageAccount"
             },
             "sku": {
                 "name": "[variables('storageType')]"
@@ -86,7 +85,7 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[variables('nsgName')]",
             "tags": {
-                "displayName": "NetworkSecurityGroup"
+                "Type": "NetworkSecurityGroup"
             },
             "location": "[resourceGroup().location]",
             "properties": {
@@ -128,7 +127,7 @@
             "name": "[variables('publicIPAddressName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "PublicIPAddress"
+                "Type": "PublicIPAddress"
             },
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
@@ -143,7 +142,7 @@
             "name": "[variables('virtualNetworkName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "VirtualNetwork"
+                "Type": "VirtualNetwork"
             },
             "properties": {
                 "addressSpace": {
@@ -167,7 +166,7 @@
             "name": "[variables('nicName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "NetworkInterface"
+                "Type": "NetworkInterface"
             },
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
@@ -201,7 +200,7 @@
             "name": "[parameters('vmName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "VirtualMachine"
+                "Type": "VirtualMachine"
             },
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
@@ -224,12 +223,13 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "name": "osdisk",
-                        "vhd": {
-                            "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageName'))).primaryEndpoints.blob, variables('vhdStorageContainerName'),'/', variables('OSDiskName'),'.vhd')]"
-                        },
+                        "osType": "Linux",
+                        "name": "[variables('osDiskName')]",
                         "caching": "ReadWrite",
-                        "createOption": "FromImage"
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
+                        }
                     }
                 },
                 "networkProfile": {
@@ -256,7 +256,7 @@
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ],
             "tags": {
-                "displayName": "AzureWireGuard"
+                "Type": "CustomScriptExtension"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
