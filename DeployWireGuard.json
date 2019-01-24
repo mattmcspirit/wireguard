@@ -50,7 +50,6 @@
         "imagePublisher": "Canonical",
         "imageOffer": "UbuntuServer",
         "ubuntuOSVersion": "18.04-LTS",
-        "oSDiskName": "[toLower(concat(parameters('vmName'),'_osdisk_',variables('randomGUID')))]",
         "nicName": "[toLower(concat(parameters('vmName'), '_nic_',variables('randomGUID')))]",
         "addressPrefix": "10.0.0.0/16",
         "subnetPrefix": "10.0.0.0/24",
@@ -59,7 +58,6 @@
         "storageType": "Standard_LRS",
         "publicIPAddressName": "[toLower(concat(parameters('vmName'), '_pip_',variables('randomGUID')))]",
         "publicIPAddressType": "Dynamic",
-        "vhdStorageContainerName": "vhds",
         "nsgName": "[toLower(concat(parameters('vmName'), '_nsg_',variables('randomGUID')))]",
         "dnsName": "[toLower(concat(parameters('vmName'),variables('randomGUID')))]",
         "virtualNetworkName": "[toLower(concat(parameters('vmName'), '_vnet_',variables('randomGUID')))]",
@@ -224,26 +222,27 @@
                         "version": "latest"
                     },
                     "osDisk": {
+                        "osType": "Linux",
                         "name": "osdisk",
-                        "vhd": {
-                            "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageName'))).primaryEndpoints.blob, variables('vhdStorageContainerName'),'/', variables('OSDiskName'),'.vhd')]"
-                        },
                         "caching": "ReadWrite",
-                        "createOption": "FromImage"
-                    }
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
                         }
-                    ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": "true",
-                        "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageName'))).primaryEndpoints.blob)]"
                     }
+                }
+            },
+            "networkProfile": {
+                "networkInterfaces": [
+                    {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+                    }
+                ]
+            },
+            "diagnosticsProfile": {
+                "bootDiagnostics": {
+                    "enabled": "true",
+                    "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageName'))).primaryEndpoints.blob)]"
                 }
             }
         },
