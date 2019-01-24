@@ -71,7 +71,7 @@
             "apiVersion": "2018-07-01",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "StorageAccount"
+                "Type": "StorageAccount"
             },
             "sku": {
                 "name": "[variables('storageType')]"
@@ -84,7 +84,7 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[variables('nsgName')]",
             "tags": {
-                "displayName": "NetworkSecurityGroup"
+                "Type": "NetworkSecurityGroup"
             },
             "location": "[resourceGroup().location]",
             "properties": {
@@ -126,7 +126,7 @@
             "name": "[variables('publicIPAddressName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "PublicIPAddress"
+                "Type": "PublicIPAddress"
             },
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
@@ -141,7 +141,7 @@
             "name": "[variables('virtualNetworkName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "VirtualNetwork"
+                "Type": "VirtualNetwork"
             },
             "properties": {
                 "addressSpace": {
@@ -165,7 +165,7 @@
             "name": "[variables('nicName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "NetworkInterface"
+                "Type": "NetworkInterface"
             },
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
@@ -199,7 +199,7 @@
             "name": "[parameters('vmName')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "displayName": "VirtualMachine"
+                "Type": "VirtualMachine"
             },
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
@@ -255,7 +255,7 @@
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ],
             "tags": {
-                "displayName": "AzureWireGuard"
+                "Type": "CustomScriptExtension"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
