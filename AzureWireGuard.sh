@@ -2,7 +2,7 @@
 
 ## unattended-upgrade
 sudo apt-get update -y 
-sudo unattended-upgrades -y
+sudo unattended-upgrades -v
 
 ## IP Forwarding
 sed -i -e 's/#net.ipv4.ip_forward.*/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
