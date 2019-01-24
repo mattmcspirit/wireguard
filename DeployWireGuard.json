@@ -42,7 +42,7 @@
                 "artifactsBaseUrl": "",
                 "description": "Choose where the AzureWireGuard.sh install script can be found"
             },
-            "defaultValue": "https://raw.githubusercontent.com/vijayshinva/AzureWireGuard/master/AzureWireGuard/CustomScripts/AzureWireGuard.sh"
+            "defaultValue": "https://raw.githubusercontent.com/mattmcspirit/wireguard/master/AzureWireGuard.sh"
         }
     },
     "variables": {
