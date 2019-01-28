@@ -74,52 +74,52 @@ PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING 
 [Peer]
 PublicKey =  $client_one_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.101/32
+AllowedIPs = 10.10.10.101/32
 
 [Peer]
 PublicKey =  $client_two_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.102/32
+AllowedIPs = 10.10.10.102/32
 
 [Peer]
 PublicKey =  $client_three_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.103/32
+AllowedIPs = 10.10.10.103/32
 
 [Peer]
 PublicKey =  $client_four_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.104/32
+AllowedIPs = 10.10.10.104/32
 
 [Peer]
 PublicKey =  $client_five_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.105/32
+AllowedIPs = 10.10.10.105/32
 
 [Peer]
 PublicKey =  $client_six_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.106/32
+AllowedIPs = 10.10.10.106/32
 
 [Peer]
 PublicKey =  $client_seven_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.107/32
+AllowedIPs = 10.10.10.107/32
 
 [Peer]
 PublicKey =  $client_eight_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.108/32
+AllowedIPs = 10.10.10.108/32
 
 [Peer]
 PublicKey =  $client_nine_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.109/32
+AllowedIPs = 10.10.10.109/32
 
 [Peer]
 PublicKey =  $client_ten_public_key
 PresharedKey = $preshared_key
-AllowedIps = 10.10.10.110/32
+AllowedIPs = 10.10.10.110/32
 EOF
 
 # Client Configs
@@ -133,7 +133,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -149,7 +149,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -165,7 +165,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -181,7 +181,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -197,7 +197,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -213,7 +213,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -229,7 +229,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -245,7 +245,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -261,7 +261,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
@@ -277,7 +277,7 @@ DNS = 1.1.1.1
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
 EndPoint = $1:51820
-AllowedIps = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
 
