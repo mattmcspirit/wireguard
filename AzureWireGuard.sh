@@ -132,7 +132,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -148,7 +148,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -164,7 +164,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -180,7 +180,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -196,7 +196,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -212,7 +212,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -228,7 +228,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -244,7 +244,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -260,7 +260,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
@@ -276,7 +276,7 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
+Endpoint = $1:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepAlive = 25
 EOF
