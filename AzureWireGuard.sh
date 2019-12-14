@@ -132,9 +132,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-1.conf
@@ -148,9 +148,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-2.conf
@@ -164,9 +164,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-3.conf
@@ -180,9 +180,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-4.conf
@@ -196,9 +196,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-5.conf
@@ -212,9 +212,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-6.conf
@@ -228,9 +228,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-7.conf
@@ -244,9 +244,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-8.conf
@@ -260,9 +260,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-9.conf
@@ -276,9 +276,9 @@ DNS = 1.1.1.1
 [Peer]
 PublicKey =  $server_public_key
 PresharedKey = $preshared_key
-EndPoint = $1:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepAlive = 25
+Endpoint = $1:51820
+PersistentKeepalive = 25
 EOF
 
 chmod go+r /home/$2/wg0-client-10.conf
